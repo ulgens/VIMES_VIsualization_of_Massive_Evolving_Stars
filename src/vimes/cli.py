@@ -11,7 +11,9 @@ DEFAULT_FRAMES_PATH = BASE_DIR / "frames_data.npz"
 
 
 def parse_preprocessing_arguments():
-    parser = argparse.ArgumentParser(description="Parse preprocessing settings.")
+    parser = argparse.ArgumentParser(
+        description="Parse preprocessing settings.",
+    )
 
     parser.add_argument(
         "hdf5",
@@ -31,7 +33,9 @@ def parse_preprocessing_arguments():
 
 
 def parse_animation_arguments():
-    parser = argparse.ArgumentParser(description="Parse scaling and image settings.")
+    parser = argparse.ArgumentParser(
+        description="Parse scaling and image settings.",
+    )
 
     parser.add_argument(
         "frames",
@@ -55,11 +59,16 @@ def parse_animation_arguments():
     )
 
     parser.add_argument(
-        "--save-mp4", type=str, default=None, help="Save animation to MP4 file"
+        "--save-mp4",
+        type=str,
+        default=None,
+        help="Save animation to MP4 file",
     )
 
     parser.add_argument(
-        "--no-display", action="store_true", help="Run headless (do not open a window)"
+        "--no-display",
+        action="store_true",
+        help="Run headless (do not open a window)",
     )
 
     return parser.parse_args()
