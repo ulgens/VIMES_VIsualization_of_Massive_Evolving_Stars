@@ -18,6 +18,8 @@ from pathlib import Path
 import h5py as h5
 import numpy as np
 
+from vimes.temp_to_color import add_temperatures_and_rgb
+
 BASE_DIR = Path(__file__).parent
 EXAMPLES_DIR = BASE_DIR.parents[1] / "examples"
 HDF5_PATH = EXAMPLES_DIR / "BSE_Detailed_Output_0.h5"
@@ -265,12 +267,28 @@ def preprocess_to_frames(hdf5_path, out_path):
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--hdf5", default=str(HDF5_PATH))
-    parser.add_argument("--out", default=str(OUTPUT_FRAMES_FILE))
+    parser = argparse.ArgumentParser(
+        description="Parse preprocessing settings.",
+    )
+    parser.add_argument(
+        "hdf5",
+        default=HDF5_PATH,
+        type=Path,
+        help="Path to the input HDF5 file.",
+    )
+    parser.add_argument(
+        "out",
+        default=OUTPUT_FRAMES_FILE,
+        type=Path,
+        help="Path to the output frames file.",
+    )
     args = parser.parse_args()
 
+    if not args.hdf5.exists():
+        raise FileNotFoundError(f"{args.hdf5} not found.")
+
     preprocess_to_frames(args.hdf5, args.out)
+    add_temperatures_and_rgb(args.hdf5, args.out, args.out)
 
 
 if __name__ == "__main__":
